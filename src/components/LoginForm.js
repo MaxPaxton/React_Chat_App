@@ -4,9 +4,11 @@ export default class LoginForm extends Component {
     constructor(props){
         super(props);
         this.state ={
-            nickname:"",
+            nickname:"Anonymous",
+            room:"Work Chat",
             error:""
         };
+
     }
     render() {
         const { nickname,error} = this.state
@@ -16,10 +18,18 @@ export default class LoginForm extends Component {
                 <label htmlFor="nickname">
                     <h2>Got Nickname?</h2>
                 </label>
-                <input ref={(input)=>{ this.textInput = input}} type="text" id="nickname"
+                <input ref={this.textInput} type="text" id="nickname"
                 value={nickname}
-                onChange={this.handleChange}
+                onChange={this.handleChangeUser}
                 placeholder={"Choose A Nickname"}  />
+                <label htmlFor="nickname">
+                    <h2>Char Room?</h2>
+                </label>
+                <select name="rooms" id="rooms" onChange={this.handleChangeRoom}>
+                                    <option value="Work Chat">Work Chat</option>
+                                    <option value="School Chat">School Chat</option>
+                                    <option value="Friend Chat">Friend Chat</option>
+                </select>
                 <div className="error">{error ? error:null}</div>
             </form>
             </div>
@@ -28,13 +38,19 @@ export default class LoginForm extends Component {
 
     handleSubmit = (e)=>{
         e.preventDefault()
+        console.log();
         const {socket} = this.props
-        const {nickname} = this.state
-        this.props.setUser(nickname)
+        const {nickname,room} = this.state;
+        this.props.setUserAndRoom(nickname,room)
+        console.log(room)
         //socket.emit("joinRoom",{ socket_id :socket.id,username: nickname /*, room: room.value*/},this.setUser)
     }
-    handleChange = (e) =>{
+    handleChangeUser = (e) =>{
         this.setState({nickname:e.target.value})
+    }
+
+    handleChangeRoom = (e) =>{
+        this.setState({room:e.target.value})
     }
 
     setUser = ({user}) =>{

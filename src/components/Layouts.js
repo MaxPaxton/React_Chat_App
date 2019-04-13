@@ -9,16 +9,17 @@ export default class Layouts extends Component {
         super(props);
         this.state = {
             socket: null,
-            user: null
+            user: null,
+            room: null
         };
     }
     render() {
-        const { socket, user } = this.state
+        const { socket, user ,room} = this.state
         return (
         <div className="container">
             {!user ?
-            <LoginForm socket={socket} setUser={this.setUser.bind(this)} />
-            : <ChatContainer socket={socket} user={user} logout={this.logout} />
+            <LoginForm socket={socket} setUserAndRoom={this.setUserAndRoom.bind(this)} />
+            : <ChatContainer socket={socket} user={user} room={room} logout={this.logout} />
             }
         </div>
         )
@@ -30,15 +31,14 @@ export default class Layouts extends Component {
         })
         this.setState({socket})
     }
-
     componentWillMount() {
       this.initSocket()
     }
 
-    setUser(user){
+    setUserAndRoom = (user,room)=>{
         const {socket} = this.state
         socket.emit("User Connected", user);
-        this.setState({user:user});
+        this.setState({user:user ,room:room});
     }
 
     logout = ()=>{
