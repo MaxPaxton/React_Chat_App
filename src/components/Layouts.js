@@ -17,6 +17,8 @@ export default class Layouts extends Component {
         const { socket, user ,room} = this.state
         return (
         <div className="container">
+            <h1>My Awesome Chat:</h1>
+            <h6>By Maxim Paxton 101064370 and Patrick Murphy 101103097</h6>
             {!user ?
             <LoginForm socket={socket} setUserAndRoom={this.setUserAndRoom.bind(this)} />
             : <ChatContainer socket={socket} user={user} room={room} logout={this.logout} />

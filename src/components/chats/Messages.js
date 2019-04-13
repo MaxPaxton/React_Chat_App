@@ -3,13 +3,15 @@ import React, { Component } from 'react'
 export default class Messages extends Component {
   render() {
     return (
-      <div className="container">
-				<div className="chat-room-container">
-				  <div className="chat-room"></div>
-          <div className="chat-room choose">
-          </div>
-				</div>
+      <div>
+      <div className="col-md-8">
+        <div id="discussion">heelo</div>
+        <div id="feedback"></div>			
 			</div>
+      <div id="onlineUsers" className="col-md-4">
+        Online Users: 	
+			</div>
+      </div>
     )
   }
 }

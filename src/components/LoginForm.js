@@ -13,8 +13,9 @@ export default class LoginForm extends Component {
     render() {
         const { nickname,error} = this.state
         return (
-            <div className="login">
-            <form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+            <div className="row">
+            <div className="col-xs-2 col-center-block">
+            <form onSubmit={this.handleSubmit.bind(this)}>
                 <label htmlFor="nickname">
                     <h2>Got Nickname?</h2>
                 </label>
@@ -25,13 +26,14 @@ export default class LoginForm extends Component {
                 <label htmlFor="nickname">
                     <h2>Char Room?</h2>
                 </label>
-                <select name="rooms" id="rooms" onChange={this.handleChangeRoom}>
+                <select dropdown-menu name="rooms" id="rooms" onChange={this.handleChangeRoom}>
                                     <option value="Work Chat">Work Chat</option>
                                     <option value="School Chat">School Chat</option>
                                     <option value="Friend Chat">Friend Chat</option>
                 </select>
                 <div className="error">{error ? error:null}</div>
             </form>
+            </div>
             </div>
         )
     }

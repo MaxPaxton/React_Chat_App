@@ -7,9 +7,9 @@ export default class ChatContainer extends Component {
   constructor(props){
     super(props);
     this.setState({
-      chats:["",""],
+      chats:[],
       room:null,
-      activeChat:""
+      activeChat:null
     }); 
 
   }
@@ -21,7 +21,7 @@ export default class ChatContainer extends Component {
         <Room  user={user} room={room}/>
         <Messages />
         <WriteMsgArea />
-        <button onClick={logout}>Log Out</button>
+        <button className="btn btn-warning" onClick={logout}>Log Out</button>
       </div>
     )
   }
