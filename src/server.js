@@ -57,6 +57,7 @@ io.on('connection', function (socket) {
 
   //Set Username and join Room
   socket.on("joinRoom", function(data,callback){
+    console.log(data.room);
     callback(true);
     if(rooms.includes(data.room)){
       socket.join(data.room);
@@ -71,6 +72,7 @@ io.on('connection', function (socket) {
 
   //Send Message
   socket.on('chat', function(data){
+    console.log("you are chatting");
     io.sockets.to(data.room).emit('chat', data);
    });
   socket.on("typing",function(data){

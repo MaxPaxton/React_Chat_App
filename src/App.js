@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Layout from './components/Layouts' ;
 import './index.css'
+import SocketContext from './socket-context'
+import * as io from 'socket.io-client'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="container">
-        <Layout title="chatApp-Maxim Paxton and Patrick Murphy"
+const socket = io("http://192.168.0.16:4000")
+
+const App = props => (
+  <SocketContext.Provider value={socket}>
+    <Layout  title="chatApp-Maxim Paxton and Patrick Murphy"
         extras="ids: 101064370 100000000" />
-      </div>
-    );
-  }
-}
+  </SocketContext.Provider>
+)
 
-export default App;
+
+export default App

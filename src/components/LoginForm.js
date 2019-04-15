@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import axios from "axios";
+import SocketContext from '../socket-context'
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
     constructor(props){
         super(props);
         this.state ={
@@ -26,7 +28,7 @@ export default class LoginForm extends Component {
                 <label htmlFor="nickname">
                     <h2>Char Room?</h2>
                 </label>
-                <select dropdown-menu name="rooms" id="rooms" onChange={this.handleChangeRoom}>
+                <select name="rooms" id="rooms" onChange={this.handleChangeRoom}>
                                     <option value="Work Chat">Work Chat</option>
                                     <option value="School Chat">School Chat</option>
                                     <option value="Friend Chat">Friend Chat</option>
@@ -36,16 +38,6 @@ export default class LoginForm extends Component {
             </div>
             </div>
         )
-    }
-
-    handleSubmit = (e)=>{
-        e.preventDefault()
-        console.log();
-        const {socket} = this.props
-        const {nickname,room} = this.state;
-        this.props.setUserAndRoom(nickname,room)
-        console.log(room)
-        //socket.emit("joinRoom",{ socket_id :socket.id,username: nickname /*, room: room.value*/},this.setUser)
     }
     handleChangeUser = (e) =>{
         this.setState({nickname:e.target.value})
@@ -64,4 +56,37 @@ export default class LoginForm extends Component {
     setError = (error)=>{
         this.setState({error})
     }
+
+    handleSubmit = (e)=>{
+        e.preventDefault()
+        console.log();
+        const {socket} = this.props
+        const {nickname,room} = this.state;
+        this.props.setUserAndRoom(nickname,room)
+        socket.emit("joinRoom",{ socket_id :socket.id,username: nickname , room: room},(data)=>{
+            if(data){
+                //send event to DB
+                axios.post('http://localhost:4000/api/eventLog', {
+                    socket_id: socket.id,
+                    username: nickname,
+                    room: room,
+                    action: `${socket.id} chose ${nickname} as name and Logged in room ${room}`
+                  })
+                  .then(function (response) {
+                    console.log(response);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            }
+        });
+    }
 }
+
+const LayoutSocket = props => (
+    <SocketContext.Consumer>
+    {socket => <LoginForm {...props} socket={socket} />}
+    </SocketContext.Consumer>
+  )
+  
+export default LayoutSocket;

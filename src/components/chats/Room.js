@@ -7,7 +7,7 @@ export default class Room extends Component {
       <div>
         <h3>NickName: {user}</h3>
         <h4>{room} || Wanna Change?
-        <select dropdown-menu name="rooms" id="rooms" onChange={this.handleChangeRoom}>
+        <select name="rooms" id="rooms" onChange={this.handleChangeRoom}>
         <option value="Work Chat"></option>
         <option value="Work Chat">Work Chat</option>
         <option value="School Chat">School Chat</option>

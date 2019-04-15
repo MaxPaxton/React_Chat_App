@@ -15,11 +15,11 @@ export default class ChatContainer extends Component {
   }
 
   render() {
-    const { user, room, logout } = this.props
+    const { socket, user, room, logout } = this.props
     return (
       <div className="container">
         <Room  user={user} room={room}/>
-        <Messages />
+        <Messages socket={socket} room={room}  />
         <WriteMsgArea />
         <button className="btn btn-warning" onClick={logout}>Log Out</button>
       </div>
